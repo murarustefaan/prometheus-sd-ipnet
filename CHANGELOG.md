@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/murarustefaan/prometheus-sd-ipnet/compare/v1.0.0...v1.1.0) (2025-11-02)
+
+
+### Features
+
+* Add Kustomization for deploying on top of k8s ([7f9f8ee](https://github.com/murarustefaan/prometheus-sd-ipnet/commit/7f9f8eefd6fb641e9779c8c502931c8b649ec20b))
+
+
+### Bug Fixes
+
+* Ensure code is linted ([b6017ad](https://github.com/murarustefaan/prometheus-sd-ipnet/commit/b6017ad838189de9a221db5c73ad00902d1d4708))
+
 ## 1.0.0 (2025-11-02)
 
 
