@@ -37,13 +37,17 @@ func (m *Manager) Start() error {
 	return m.server.ListenAndServe()
 }
 
-func (*Manager) handleHealth(w http.ResponseWriter, _ *http.Request) {
+func (m *Manager) handleHealth(w http.ResponseWriter, _ *http.Request) {
 	response := struct {
 		Ok bool `json:"ok"`
 	}{
 		Ok: true,
 	}
-	json.NewEncoder(w).Encode(response)
+	err := json.NewEncoder(w).Encode(response)
+	if err != nil {
+		m.log.Error().Err(err).Msg("failed to write health response")
+		return
+	}
 }
 
 func (m *Manager) handleTargets(w http.ResponseWriter, _ *http.Request) {
@@ -57,10 +61,12 @@ func (m *Manager) handleTargets(w http.ResponseWriter, _ *http.Request) {
 			"job": "ipnet_scanner",
 		},
 	}
-	for i := range targets {
-		response.Targets = append(response.Targets, targets[i])
-	}
+	response.Targets = append(response.Targets, targets...)
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(targets)
+	err := json.NewEncoder(w).Encode(targets)
+	if err != nil {
+		m.log.Error().Err(err).Msg("failed to write targets response")
+		return
+	}
 }
