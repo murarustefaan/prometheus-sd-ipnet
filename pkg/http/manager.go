@@ -53,18 +53,18 @@ func (m *Manager) handleHealth(w http.ResponseWriter, _ *http.Request) {
 func (m *Manager) handleTargets(w http.ResponseWriter, _ *http.Request) {
 	targets := m.scanner.Targets()
 
-	response := struct {
+	response := []struct {
 		Targets []string          `json:"targets"`
 		Labels  map[string]string `json:"labels"`
-	}{
+	}{{
 		Labels: map[string]string{
 			"job": "ipnet_scanner",
 		},
-	}
-	response.Targets = append(response.Targets, targets...)
+	}}
+	response[0].Targets = append(response[0].Targets, targets...)
 
 	w.Header().Set("Content-Type", "application/json")
-	err := json.NewEncoder(w).Encode(targets)
+	err := json.NewEncoder(w).Encode(response)
 	if err != nil {
 		m.log.Error().Err(err).Msg("failed to write targets response")
 		return
