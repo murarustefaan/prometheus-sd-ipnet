@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/murarustefaan/prometheus-sd-ipnet/compare/v1.1.0...v1.1.1) (2025-11-02)
+
+
+### Bug Fixes
+
+* Fix response format to work with prometheus SD ([218047d](https://github.com/murarustefaan/prometheus-sd-ipnet/commit/218047d56b43e54cf85b2271b5e602e10cc40804))
+
 ## [1.1.0](https://github.com/murarustefaan/prometheus-sd-ipnet/compare/v1.0.0...v1.1.0) (2025-11-02)
 
 
