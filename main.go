@@ -5,20 +5,37 @@ import (
 	"os"
 	"time"
 
+	"github.com/kelseyhightower/envconfig"
 	"github.com/rs/zerolog"
 
 	"github.com/murarustefaan/prometheus-sd-ipnet/pkg/http"
 	"github.com/murarustefaan/prometheus-sd-ipnet/pkg/scanner"
 )
 
+type Config struct {
+	Network     string        `envconfig:"NETWORK"`
+	Port        int           `envconfig:"PORT" default:"9100"`
+	Timeout     time.Duration `envconfig:"TIMEOUT" default:"2s"`
+	Interval    time.Duration `envconfig:"INTERVAL" default:"5m"`
+	Concurrency int           `envconfig:"CONCURRENCY" default:"100"`
+	ListenAddr  string        `envconfig:"LISTEN_ADDR" default:":8080"`
+	LogLevel    string        `envconfig:"LOG_LEVEL" default:"info"`
+}
+
 func main() {
-	network := flag.String("network", "", "Network in CIDR notation (e.g., 192.168.1.0/24)")
-	port := flag.Int("port", 9100, "Target port to scan")
-	timeout := flag.Duration("timeout", 2*time.Second, "Timeout for individual scans")
-	interval := flag.Duration("interval", 5*time.Minute, "Interval between rescans")
-	concurrency := flag.Int("concurrency", 100, "Number of concurrent scans")
-	listenAddr := flag.String("listen-addr", ":8080", "HTTP server listen address")
-	logLevel := flag.String("log-level", "info", "Log level (debug, info, warn, error)")
+	var cfg Config
+	if err := envconfig.Process("", &cfg); err != nil {
+		log := zerolog.New(os.Stdout).With().Timestamp().Logger()
+		log.Fatal().Err(err).Msg("Failed to process environment variables")
+	}
+
+	network := flag.String("network", cfg.Network, "Network in CIDR notation (e.g., 192.168.1.0/24)")
+	port := flag.Int("port", cfg.Port, "Target port to scan")
+	timeout := flag.Duration("timeout", cfg.Timeout, "Timeout for individual scans")
+	interval := flag.Duration("interval", cfg.Interval, "Interval between rescans")
+	concurrency := flag.Int("concurrency", cfg.Concurrency, "Number of concurrent scans")
+	listenAddr := flag.String("listen-addr", cfg.ListenAddr, "HTTP server listen address")
+	logLevel := flag.String("log-level", cfg.LogLevel, "Log level (debug, info, warn, error)")
 
 	flag.Parse()
 
@@ -39,7 +56,7 @@ func main() {
 	}
 
 	if *network == "" {
-		log.Fatal().Msg("Network is required. Use -network flag (e.g., -network 192.168.1.0/24)")
+		log.Fatal().Msg("Network is required. Use -network flag or NETWORK environment variable (e.g., -network 192.168.1.0/24)")
 	}
 	log.Info().Msg("booting up")
 

@@ -3,6 +3,7 @@ module github.com/murarustefaan/prometheus-sd-ipnet
 go 1.25.3
 
 require (
+	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/rs/zerolog v1.34.0
 	golang.org/x/sync v0.17.0
 )
