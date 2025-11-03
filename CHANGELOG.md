@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/murarustefaan/prometheus-sd-ipnet/compare/v1.1.1...v1.1.2) (2025-11-03)
+
+
+### Bug Fixes
+
+* Fix the CI pipeline ([80ddec3](https://github.com/murarustefaan/prometheus-sd-ipnet/commit/80ddec32c82654a2456ac57d61839056fd656628))
+
 ## [1.1.1](https://github.com/murarustefaan/prometheus-sd-ipnet/compare/v1.1.0...v1.1.1) (2025-11-02)
 
 
