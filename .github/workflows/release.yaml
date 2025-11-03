@@ -1,12 +1,6 @@
-name: Build and Push Docker
+name: Release
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
   release:
     types: [published]
 
@@ -15,49 +9,13 @@ permissions:
   packages: write
 
 jobs:
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      - name: Set up Go
-        uses: actions/setup-go@v6
-        with:
-          go-version: '1.25'
-
-      - name: Run tests
-        run: go test -v -race -coverprofile=coverage.out ./...
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v4
-        with:
-          file: ./coverage.out
-          fail_ci_if_error: false
-
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      - name: Set up Go
-        uses: actions/setup-go@v6
-        with:
-          go-version: '1.25'
-
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v8
-        with:
-          version: v2.5.0
+  test-and-lint:
+    uses: ./.github/workflows/test-and-lint.yaml
 
   docker:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    needs: [test, lint]
-    if: github.event_name == 'release'
+    needs: [test-and-lint]
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
