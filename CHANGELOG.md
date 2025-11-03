@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.5](https://github.com/murarustefaan/prometheus-sd-ipnet/compare/v1.1.4...v1.1.5) (2025-11-03)
+
+
+### Bug Fixes
+
+* Allow triggering builds manually ([d5f81db](https://github.com/murarustefaan/prometheus-sd-ipnet/commit/d5f81dbd34acbe4f35917be46d87b03dfb6e7f8b))
+* Fix CI ([1df6927](https://github.com/murarustefaan/prometheus-sd-ipnet/commit/1df69270dcf11aaba66bb40f4bcf4f92bcfbbe66))
+* Fix platform and arch params when building ([57126a3](https://github.com/murarustefaan/prometheus-sd-ipnet/commit/57126a37ac71eb2b214a41ee1c00024bbb8f9bb5))
+
 ## [1.1.4](https://github.com/murarustefaan/prometheus-sd-ipnet/compare/v1.1.3...v1.1.4) (2025-11-03)
 
 
