@@ -1,7 +1,7 @@
 FROM golang:1.25.3-trixie AS builder
 
-ARG TARGETOS=linux
-ARG TARGETARCH=amd64
+ARG TARGETOS
+ARG TARGETARCH
 
 WORKDIR /service
 
